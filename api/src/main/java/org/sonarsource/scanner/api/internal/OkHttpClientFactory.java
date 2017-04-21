@@ -72,10 +72,10 @@ public class OkHttpClientFactory {
 
     // OkHttp detect 'http.proxyHost' java property, but credentials should be filled
     final String proxyUser = System.getProperty("http.proxyUser", "");
-    if (!System.getProperty("http.proxyHost", "").isEmpty() && !proxyUser.isEmpty()) {
+    if (!proxyUser.isEmpty()) {
       okHttpClientBuilder.proxyAuthenticator((route, response) -> {
         if (HttpURLConnection.HTTP_PROXY_AUTH == response.code()) {
-          String credential = Credentials.basic(proxyUser, System.getProperty("http.proxyPassword"));
+          String credential = Credentials.basic(proxyUser, System.getProperty("http.proxyPassword", ""));
           return response.request().newBuilder().header("Proxy-Authorization", credential).build();
         }
         return null;
