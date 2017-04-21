@@ -9,16 +9,6 @@ function configureTravis {
 }
 configureTravis
 
-case "$TARGET" in
+export DEPLOY_PULL_REQUEST=true
 
-CI)
-  regular_mvn_build_deploy_analyze
-  ;;
-
-*)
-  echo "Unexpected TARGET value: $TARGET"
-  exit 1
-  ;;
-
-esac
-
+regular_mvn_build_deploy_analyze
